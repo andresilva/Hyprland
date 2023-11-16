@@ -11,9 +11,9 @@ static SP<CTexture> m_tGradientInactive       = makeShared<CTexture>();
 static SP<CTexture> m_tGradientLockedActive   = makeShared<CTexture>();
 static SP<CTexture> m_tGradientLockedInactive = makeShared<CTexture>();
 
-constexpr int       BAR_INDICATOR_HEIGHT   = 3;
-constexpr int       BAR_PADDING_OUTER_VERT = 2;
-constexpr int       BAR_PADDING_OUTER_HORZ = 2;
+constexpr int       BAR_INDICATOR_HEIGHT   = 6;
+constexpr int       BAR_PADDING_OUTER_VERT = 4;
+constexpr int       BAR_PADDING_OUTER_HORZ = 4;
 constexpr int       BAR_TEXT_PAD           = 2;
 constexpr int       BAR_HORIZONTAL_PADDING = 2;
 
@@ -47,7 +47,7 @@ SDecorationPositioningInfo CHyprGroupBarDecoration::getPositioningInfo() {
             const auto ONEBARHEIGHT = BAR_PADDING_OUTER_VERT + BAR_INDICATOR_HEIGHT + (*PGRADIENTS || *PRENDERTITLES ? *PHEIGHT : 0);
             info.desiredExtents     = {{0, (ONEBARHEIGHT * m_dwGroupMembers.size()) + 2 + BAR_PADDING_OUTER_VERT}, {0, 0}};
         } else
-            info.desiredExtents = {{0, BAR_PADDING_OUTER_VERT * 2 + BAR_INDICATOR_HEIGHT + (*PGRADIENTS || *PRENDERTITLES ? *PHEIGHT : 0) + 2}, {0, 0}};
+            info.desiredExtents = {{0, BAR_PADDING_OUTER_VERT + BAR_INDICATOR_HEIGHT + (*PGRADIENTS || *PRENDERTITLES ? *PHEIGHT : 0) + 2}, {0, 0}};
     } else
         info.desiredExtents = {{0, 0}, {0, 0}};
     return info;
@@ -114,7 +114,7 @@ void CHyprGroupBarDecoration::draw(CMonitor* pMonitor, float a) {
     m_fBarWidth             = *PSTACKED ? ASSIGNEDBOX.w : (ASSIGNEDBOX.w - BAR_HORIZONTAL_PADDING * (barsToDraw - 1)) / barsToDraw;
     m_fBarHeight = *PSTACKED ? ((ASSIGNEDBOX.h - 2 - BAR_PADDING_OUTER_VERT) - BAR_PADDING_OUTER_VERT * (barsToDraw)) / barsToDraw : ASSIGNEDBOX.h - BAR_PADDING_OUTER_VERT;
 
-    const auto DESIREDHEIGHT = *PSTACKED ? (ONEBARHEIGHT * m_dwGroupMembers.size()) + 2 + BAR_PADDING_OUTER_VERT : BAR_PADDING_OUTER_VERT * 2 + ONEBARHEIGHT;
+    const auto DESIREDHEIGHT = *PSTACKED ? (ONEBARHEIGHT * m_dwGroupMembers.size()) + 2 + BAR_PADDING_OUTER_VERT : BAR_PADDING_OUTER_VERT + ONEBARHEIGHT;
     if (DESIREDHEIGHT != ASSIGNEDBOX.h) {
         g_pDecorationPositioner->repositionDeco(this);
     }
